@@ -73,7 +73,7 @@ public class TestPage extends BaseTest {
     }
 
     @Test(priority = 45)
-    public void verifyInvalidSearch(){
+    public void verifyResultsWithInvalidSearch(){
 
         String text = "AladinICarobnaLampa";
 
@@ -82,7 +82,7 @@ public class TestPage extends BaseTest {
     }
 
     @Test(priority = 46)
-    public void verifyValidSearch(){
+    public void verifyResultsWithValidSearch(){
 
         addEmployee();
         webTablePage.enterValueForSearch(LASTNAME);
@@ -91,7 +91,7 @@ public class TestPage extends BaseTest {
     }
 
     @Test(priority = 47)
-    public void verifyValidSearchUsingNumbers(){
+    public void verifyResultsUsingNumbersForSearch(){
 
         String number = "4";
 
