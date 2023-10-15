@@ -50,11 +50,14 @@ public class BaseTest {
         List<WebElement> card = driver.findElements(By.className("card-body"));
         for (int i = 0; i < card.size(); i++) {
             if (card.get(i).getText().equals(cardName)){
-                ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", card.get(i));
+                scrollToElement(card.get(i));
                 card.get(i).click();
                 break;
             }
         }
+    }
+    public void scrollToElement(WebElement element){
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public void goToElements(){
