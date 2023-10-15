@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+
 public class TestPage extends BaseTest {
 
     // Registration Form Data
@@ -29,6 +30,9 @@ public class TestPage extends BaseTest {
     @Test(priority = 10)
     public void verifyIfTablePageElementsArePresent(){
 
+        goToElements();
+        sidebar.goToWebTable();
+
         Assert.assertEquals(webTablePage.pageName(), "Web Tables");
         Assert.assertTrue(webTablePage.addButton.isDisplayed());
         Assert.assertTrue(webTablePage.employeeTable.isDisplayed());
@@ -36,6 +40,8 @@ public class TestPage extends BaseTest {
 
     @Test(priority = 20)
     public void verifyIfUserCanAddNewEmployee(){
+        goToElements();
+        sidebar.goToWebTable();
 
         int rowNumberBefore = webTablePage.rowNumber();
 
@@ -54,12 +60,16 @@ public class TestPage extends BaseTest {
 
     @Test(priority = 30)
     public void verifyIfAddedEmployeeIsInsideTable(){
+        goToElements();
+        sidebar.goToWebTable();
         addEmployee();
         Assert.assertTrue(findIfEmployeeIsInsideTheTable(FIRSTNAME,LASTNAME,EMAIL,AGE,SALARY,DEPARTMENT));
     }
 
     @Test(priority = 40)
     public void verifyIfUserCanChangeEmployeeData(){
+        goToElements();
+        sidebar.goToWebTable();
 
         addEmployee();
 
@@ -74,6 +84,8 @@ public class TestPage extends BaseTest {
 
     @Test(priority = 45)
     public void verifyResultsWithInvalidSearch(){
+        goToElements();
+        sidebar.goToWebTable();
 
         String text = "AladinICarobnaLampa";
 
@@ -84,6 +96,9 @@ public class TestPage extends BaseTest {
     @Test(priority = 46)
     public void verifyResultsWithValidSearch(){
 
+        goToElements();
+        sidebar.goToWebTable();
+
         addEmployee();
         webTablePage.enterValueForSearch(LASTNAME);
 
@@ -92,6 +107,9 @@ public class TestPage extends BaseTest {
 
     @Test(priority = 47)
     public void verifyResultsUsingNumbersForSearch(){
+
+        goToElements();
+        sidebar.goToWebTable();
 
         String number = "4";
 
@@ -102,6 +120,8 @@ public class TestPage extends BaseTest {
 
     @Test(priority = 50)
     public void verifyIfUserCanDeleteEmployee(){
+        goToElements();
+        sidebar.goToWebTable();
 
         addEmployee();
         Assert.assertTrue(findIfEmployeeIsInsideTheTable(FIRSTNAME,LASTNAME,EMAIL,AGE,SALARY,DEPARTMENT));
@@ -114,6 +134,9 @@ public class TestPage extends BaseTest {
     // For complete testing this option, u need to wait ~ 10,3 sec.
     @Test(priority = 60)
     public void verifyIfUserCanDeleteAllEmployees(){
+
+        goToElements();
+        sidebar.goToWebTable();
 
         deleteAllEmployees();
         Assert.assertEquals(webTablePage.rowNumber(), 0);
