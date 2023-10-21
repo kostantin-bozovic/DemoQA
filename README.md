@@ -1,5 +1,5 @@
 # DemoQA
-A site where I had the chance to do Automated testing with Selenium of  ''Web tables'' and ''Student Registration Form''.  ( POM and DDT )
+A site where I had the chance to do Automated testing with Selenium of  ''Web tables'' and ''Registration Form''.  ( POM and DDT )
 
 ## Dependencies
 * Run on Windows 11 Pro
