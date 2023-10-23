@@ -1,5 +1,6 @@
 package Base;
 
+import Pages.ElementsPage;
 import Pages.Sidebar;
 import Pages.WebTablePage;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -25,6 +26,7 @@ public class BaseTest {
     public ExcelReader excelReader;
     public WebTablePage webTablePage;
     public Sidebar sidebar;
+    public ElementsPage elementsPage;
 
     @BeforeClass
     public void setUp() throws IOException {
@@ -36,6 +38,7 @@ public class BaseTest {
 
         webTablePage = new WebTablePage();
         sidebar = new Sidebar();
+        elementsPage = new ElementsPage();
 
         excelReader = new ExcelReader("src/test/java/TestData.xlsx");
     }
@@ -43,8 +46,11 @@ public class BaseTest {
     @AfterClass
     public void tearDown() {
         //driver.manage().deleteAllCookies();
-        driver.quit();
+        //driver.quit();
     }
+
+
+    // Open Cards from site, used for navigation
 
     public void openCard(String cardName){
         List<WebElement> card = driver.findElements(By.className("card-body"));
@@ -56,14 +62,22 @@ public class BaseTest {
             }
         }
     }
+
+    // Scroll to given element
+
     public void scrollToElement(WebElement element){
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
+    // Navigate to the ELEMENTS page
 
     public void goToElements(){
         openCard("Elements");
         Assert.assertEquals(driver.getCurrentUrl(), URL + "elements");
     }
+
+    // Navigate to the FORMS page
+
     public void goToForms(){
         openCard("Forms");
         Assert.assertEquals(driver.getCurrentUrl(), URL + "forms");

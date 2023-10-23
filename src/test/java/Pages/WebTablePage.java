@@ -9,63 +9,68 @@ import java.util.List;
 
 public class WebTablePage extends BaseTest {
 
+    // Constructor for Web Table Class, public modifier
     public WebTablePage(){
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(css = ".ReactTable.-striped.-highlight")
+
+    // POM Locators, covered: className, css, id...
+    @FindBy(css = ".ReactTable.-striped.-highlight") // employee table
     public WebElement employeeTable;
 
-    @FindBy(id = "searchBox")
+    @FindBy(id = "searchBox") // search text box
     public WebElement searchBox;
 
-    @FindBy(id = "addNewRecordButton")
+    @FindBy(id = "addNewRecordButton") // add button
     public WebElement addButton;
 
-    @FindBy(css = ".pattern-backgound.playgound-header")
+    @FindBy(css = ".pattern-backgound.playgound-header") // page title
     public WebElement pageTitlePage;
 
     @FindBy(css = "span[title='Delete']")
-    public List<WebElement> listOfDeleteActionOptions;
+    public List<WebElement> listOfDeleteActionOptions; // List of delete action button (used for finding number of employees)
 
-    @FindBy(css = "span[title='Delete']")
+    @FindBy(css = "span[title='Delete']") // delete button
     public WebElement deleteButton;
 
-    @FindBy(className = "rt-tbody")
+    @FindBy(className = "rt-tbody") // table body
     public WebElement table;
 
-    @FindBy(className = "rt-tr-group")
+    @FindBy(className = "rt-tr-group") // list of rows
     public List<WebElement> rowData;
 
     @FindBy(className = "rt-td")
-    public List<WebElement> recordData;
+    public List<WebElement> recordData; // list of records
 
     @FindBy(id = "firstName")
-    public WebElement firstNameTextBox;
+    public WebElement firstNameTextBox; // first name text box
 
     @FindBy(id = "lastName")
-    public WebElement lastNameTextBox;
+    public WebElement lastNameTextBox; // last name text box
 
     @FindBy(id = "userEmail")
-    public WebElement emailTextBox;
+    public WebElement emailTextBox; // email text box
 
     @FindBy(id = "age")
-    public WebElement ageTextBox;
+    public WebElement ageTextBox; // age text box
 
     @FindBy(id = "salary")
-    public WebElement salaryTextBox;
+    public WebElement salaryTextBox; // salary text box
 
     @FindBy(id = "department")
-    public WebElement departmentTextBox;
+    public WebElement departmentTextBox; // department text box
 
     @FindBy(id = "submit")
-    public WebElement submitButton;
-
-    @FindBy(css = ".modal-title.h4")
-    public WebElement pageTitleRegistration;
+    public WebElement submitButton; // submit button
 
 
-    // TODO ----------------------------------------------------------------------- Action
+
+    //-------------------------------------------------------------------------------------------------------------------
+    // Registration form methods
+    // First clear and then enter the values
+
+
     public void insertFirsName(String firstname){
         firstNameTextBox.clear();
         firstNameTextBox.sendKeys(firstname);
@@ -90,13 +95,11 @@ public class WebTablePage extends BaseTest {
         departmentTextBox.clear();
         departmentTextBox.sendKeys(department);
     }
+    //-------------------------------------------------------------------------------------------------------------------
+    //  Methods that perform action on registration form and table
 
     public void clickOnSubmitButton(){
         submitButton.click();
-    }
-
-    public String textPageTitle(){
-        return pageTitlePage.getText();
     }
     public String pageName(){
         return pageTitlePage.getText();
