@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class ElementsPage extends BaseTest {
 
     // Constructor for Element Page Class, public modifier
@@ -17,6 +19,7 @@ public class ElementsPage extends BaseTest {
     @FindBy(css = ".pattern-backgound.playgound-header")
     public WebElement pageTitle;
 
+    //------------------------------------------------------------------------------------------------------------------
     // TEXT BOX ELEMENTS
     @FindBy(id = "userName")
     public WebElement fullNameTextBox; // full name
@@ -30,6 +33,23 @@ public class ElementsPage extends BaseTest {
     public WebElement submitButton; // submit button
     @FindBy(css = ".border.col-md-12.col-sm-12")
     public WebElement submittedForm; // submitted form
+    //------------------------------------------------------------------------------------------------------------------
+    // CHECK BOX
+
+    @FindBy(css = ".rct-option.rct-option-expand-all") // expend all checkboxes - button
+    public WebElement expendCheckboxes;
+    @FindBy(css = ".rct-option.rct-option-collapse-all") // collapse all checkboxes - button
+    public WebElement collapseCheckboxes;
+    @FindBy( css = ".rct-icon.rct-icon-uncheck") // number of unchecked checkboxes
+    public List<WebElement> uncheckedCheckbox;
+    @FindBy( css = ".rct-icon.rct-icon-check") // number of checked checkboxes
+    public List<WebElement> checkedCheckbox;
+    @FindBy( css = ".rct-icon.rct-icon-check") // number of checked checkboxes
+    public WebElement checkedCheckboxButton;
+    @FindBy(css = ".rct-icon.rct-icon-expand-close") // symbol for expending
+    public WebElement expendSymbol;
+    @FindBy(css = ".rct-icon.rct-icon-expand-open") // symbol for expending
+    public WebElement collapseSymbol;
 
 
     //------------------------------------------------------------------------------------------------------------------
@@ -78,5 +98,15 @@ public class ElementsPage extends BaseTest {
         return element.isDisplayed();
     }
     //------------------------------------------------------------------------------------------------------------------
+    // CHECK BOX
 
+    public void expendAll(){
+        expendCheckboxes.click();
+    }
+    public void collapseAll(){
+        collapseCheckboxes.click();
+    }
+    public void clickOnUnchecked(int i) {
+        uncheckedCheckbox.get(i).click();
+    }
 }

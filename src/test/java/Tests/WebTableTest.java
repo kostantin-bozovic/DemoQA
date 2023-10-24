@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 public class WebTableTest extends BaseTest {
 
     // Registration Form Data
+    // Store values from TestData.xlsx file
     private String FIRSTNAME;
     private String LASTNAME;
     private String EMAIL;
@@ -32,8 +33,21 @@ public class WebTableTest extends BaseTest {
     @Test(priority = 10)
     public void verifyIfTablePageElementsArePresent(){
 
+        String expectedURL, actualURL;
+
+        // URL
+        expectedURL = "https://demoqa.com/webtables";
+        actualURL = driver.getCurrentUrl();
+
+        Assert.assertEquals(actualURL, expectedURL);
+
+        // Page name
         Assert.assertEquals(webTablePage.pageName(), "Web Tables");
+
+        // Table add button is displayed
         Assert.assertTrue(webTablePage.addButton.isDisplayed());
+
+        // Table is displayed
         Assert.assertTrue(webTablePage.employeeTable.isDisplayed());
     }
 
@@ -43,35 +57,45 @@ public class WebTableTest extends BaseTest {
         int rowNumberBefore = webTablePage.rowNumber();
 
         webTablePage.clickOnAddButton();
-        //Assert.assertEquals(registrationFormTablePage.textPageTitle(), "Registration Form");
 
         fillRegistrationForm("TablePageData");
+
+        // Submit button is displayed
 
         Assert.assertTrue(webTablePage.submitButton.isDisplayed());
         webTablePage.clickOnSubmitButton();
 
         int rowNumberAfterAddedEmployee = webTablePage.rowNumber();
 
+        // Verify if number of employees inside the table (bigger by 1 new employee)
+
         Assert.assertEquals(rowNumberAfterAddedEmployee,rowNumberBefore + 1);
     }
 
     @Test(priority = 30)
     public void verifyIfAddedEmployeeIsInsideTable(){
+
         addEmployee();
+
+        // Find if added employee is inside the table
+
         Assert.assertTrue(findIfEmployeeIsInsideTheTable(FIRSTNAME,LASTNAME,EMAIL,AGE,SALARY,DEPARTMENT));
     }
 
     @Test(priority = 40)
     public void verifyIfUserCanChangeEmployeeData(){
 
+        // add new employee
         addEmployee();
 
-        // Napravljena metoda kojom se pronalazi zadati zaposleni u tabeli i klikce na njegovo edit dugme
+        // This method finds employee inside table by given information and click's on edit button
         editEmployee(FIRSTNAME,LASTNAME,EMAIL,AGE,SALARY,DEPARTMENT);
 
+        // Fill registration with new information and submit
         fillRegistrationForm("ChangedTableData");
         webTablePage.clickOnSubmitButton();
 
+        // Verify if that employee is inside the table
         Assert.assertTrue(findIfEmployeeIsInsideTheTable(FIRSTNAME,LASTNAME,EMAIL,AGE,SALARY,DEPARTMENT));
     }
 
@@ -79,6 +103,8 @@ public class WebTableTest extends BaseTest {
     public void verifyResultsWithInvalidSearch(){
 
         String text = "AladinICarobnaLampa";
+
+        // Method to verify search option result with invalid inputs
 
         webTablePage.enterValueForSearch(text);
         Assert.assertFalse(searchTest(text));
@@ -90,6 +116,8 @@ public class WebTableTest extends BaseTest {
         addEmployee();
         webTablePage.enterValueForSearch(LASTNAME);
 
+        // Method to verify search option result with valid inputs
+
         Assert.assertTrue(searchTest(LASTNAME));
     }
 
@@ -97,8 +125,9 @@ public class WebTableTest extends BaseTest {
     public void verifyResultsUsingNumbersForSearch(){
 
         String number = "4";
-
         webTablePage.enterValueForSearch(number);
+
+        // Method to verify search option result with valid inputs (numbers)
 
         Assert.assertTrue(searchTest(number));
     }
@@ -114,7 +143,7 @@ public class WebTableTest extends BaseTest {
         Assert.assertFalse(findIfEmployeeIsInsideTheTable(FIRSTNAME,LASTNAME,EMAIL,AGE,SALARY,DEPARTMENT));
     }
 
-    // For complete testing this option, u need to wait ~ 10,3 sec.
+    // For complete this testing, u need to wait ~ 10,3 sec.
     @Test(priority = 60)
     public void verifyIfUserCanDeleteAllEmployees(){
 

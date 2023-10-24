@@ -1,9 +1,14 @@
 package Tests;
 
 import Base.BaseTest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import java.util.List;
+
+
 
 public class ElementsTest extends BaseTest {
 
@@ -17,9 +22,10 @@ public class ElementsTest extends BaseTest {
         goToElements();
     }
 
-    // TEXT BOX TEST
+    //----------------------------------------------------------------
+    // TEXT BOX
 
-    @Test(priority = 1)
+    @Test(priority = 10)
     public void textBoxElementsArePresent(){
 
         sidebar.goToTextBox();
@@ -56,7 +62,7 @@ public class ElementsTest extends BaseTest {
         // Submit button id displayed
         Assert.assertTrue(elementsPage.submitButton.isDisplayed());
     }
-    @Test(priority = 2)
+    @Test(priority = 20)
     public void userCanFillAndSubmitTexBox(){
 
         sidebar.goToTextBox();
@@ -66,7 +72,7 @@ public class ElementsTest extends BaseTest {
         scrollToElement(elementsPage.submitButton);
         elementsPage.clickSubmitButton();
     }
-    @Test(priority = 3)
+    @Test(priority = 30)
     public void submittedFormIsCorrect(){
 
         sidebar.goToTextBox();
@@ -86,11 +92,160 @@ public class ElementsTest extends BaseTest {
         Assert.assertEquals(actualForm, expectedForm);
     }
 
+    //----------------------------------------------------------------
+    // CHECK BOX
 
-//    @Test // For testing
-//    public void testDemo(){
-//
-//    }
+    @Test(priority = 40)
+    public void expendAllCheckboxesButton(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+
+        elementsPage.collapseAll();
+        elementsPage.expendAll();
+
+        // test if all checkbox elements are expended and visible
+        expectedNumber = 17;
+        actualNumber = elementsPage.uncheckedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+    @Test(priority = 50)
+    public void collapseAllCheckboxesButton(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+
+        elementsPage.expendAll();
+        elementsPage.collapseAll();
+
+        // test if all checkbox elements are expended and visible, 1 main
+        expectedNumber = 1;
+        actualNumber = elementsPage.uncheckedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+    @Test(priority = 60)
+    public void userCanExtendManuallyCheckboxes(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+
+        while (true){
+            if (elementsPage.uncheckedCheckbox.size() == 17) break;
+
+            // scroll to the element on page
+            scrollToElement(elementsPage.expendSymbol);
+            elementsPage.expendSymbol.click();
+        }
+
+        // test if all checkbox elements are expended and visible
+        expectedNumber = 17;
+        actualNumber = elementsPage.uncheckedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+    @Test(priority = 70)
+    public void userCanCollapseManuallyCheckboxes(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+
+        elementsPage.expendAll();
+
+        while (true){
+            if (elementsPage.uncheckedCheckbox.size() == 1) break;
+
+            // scroll to the element on page
+            scrollToElement(elementsPage.collapseSymbol);
+            elementsPage.collapseSymbol.click();
+        }
+
+        // test if all checkbox elements are expended and visible
+        expectedNumber = 1;
+        actualNumber = elementsPage.uncheckedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+    @Test(priority = 80)
+    public void userCanSelectAllCheckboxes(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+        elementsPage.clickOnUnchecked(0);
+
+        elementsPage.expendAll();
+
+        // test if all checkbox elements are visible
+        expectedNumber = 17;
+        actualNumber = elementsPage.checkedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+    @Test(priority = 90)
+    public void userCanUnselectAllCheckboxes(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+        elementsPage.expendAll();
+
+        elementsPage.clickOnUnchecked(0);
+        elementsPage.checkedCheckbox.get(0).click();
+
+        // test if all checkbox elements are visible
+        expectedNumber = 17;
+        actualNumber = elementsPage.uncheckedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+    @Test(priority = 100)
+    public void userCanCheckRandomCheckbox(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+
+        checkboxSelector("Angular");
+        checkboxSelector("React");
+
+        // test if all checkbox elements are expended and visible
+        expectedNumber = 12; // 2 checkboxes + 3 parents
+
+        actualNumber = elementsPage.uncheckedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+    @Test(priority = 110)
+    public void userCanUncheckRandomCheckbox(){
+
+        int expectedNumber, actualNumber;
+
+        sidebar.goToCheckBox();
+
+        // add
+        checkboxSelector("Angular");
+        checkboxSelector("React");
+
+        // remove
+        checkboxSelector("React");
+
+        // test if all checkbox elements are expended and visible
+        expectedNumber = 13; // 1 checkboxes + 3 parents
+
+        actualNumber = elementsPage.uncheckedCheckbox.size();
+
+        Assert.assertEquals(actualNumber, expectedNumber);
+    }
+
+
+    //----------------------------------------------------------------
+
 
     public void fillTextBox(){
 
@@ -115,5 +270,75 @@ public class ElementsTest extends BaseTest {
                 "Email:"+ email +"\n" +
                 "Current Address :"+ currAddress + "\n" +
                 "Permananet Address :"+ permAddress;
+    }
+
+    //--------------------------------------------------------------------------------------------------------------------
+    // Made a method to pass through checkboxes, collect two group of checkboxes,
+    // one is parent, second is child.
+    // Then this methode can contain there elements: Name, Checkbox, Children if they have
+    // User inserts name of checkbox to be checked or unchecked.
+
+    public void checkboxSelector(String checkbox) {
+
+        List<WebElement> parentsList, childrenList;
+        boolean flag = false;
+
+        elementsPage.expendAll(); // we want to expend all
+
+        // user send name of checkbox, and choose to check "true" or uncheck "false"
+        // List of parents
+        parentsList = driver.findElements(By.cssSelector("li.rct-node.rct-node-parent"));
+        childrenList = driver.findElements(By.cssSelector("li.rct-node.rct-node-leaf"));
+
+        // Iterate through elements of parents and then through children elements
+        for (WebElement listItem : parentsList) {
+
+            WebElement spanTextElement, titleElement, checkboxIcon;
+            String checkboxTitle;
+
+            // Find <span class="rct-text"> element inside each <li class="css select">
+            // Find <span class="rct-title"> element inside <label> element inside <span class="rct-text">
+            // Get the text inside <span class="rct-title">
+
+            spanTextElement = listItem.findElement(By.cssSelector("span.rct-text"));
+            titleElement = spanTextElement.findElement(By.cssSelector("label > span.rct-title"));
+
+            checkboxTitle = titleElement.getText();
+
+            // Find checkbox element of given element
+            checkboxIcon = spanTextElement.findElement(By.cssSelector("label > span.rct-checkbox"));
+            scrollToElement(checkboxIcon);
+
+            if (checkboxTitle.equals(checkbox)) {
+
+                checkboxIcon.click();
+                flag = true;
+
+            } else {
+
+                for (WebElement child : childrenList) {
+
+                    WebElement spanTextElementCh, titleElementCh, checkboxIconCh;
+                    String checkboxTitleCh;
+
+                    spanTextElementCh = child.findElement(By.cssSelector("span.rct-text"));
+                    titleElementCh = spanTextElementCh.findElement(By.cssSelector("label > span.rct-title"));
+
+                    checkboxTitleCh = titleElementCh.getText();
+
+                    // Find checkbox element of given element
+                    checkboxIconCh = spanTextElementCh.findElement(By.cssSelector("label > span.rct-checkbox"));
+                    scrollToElement(checkboxIconCh);
+
+                    if (checkboxTitleCh.equals(checkbox)) {
+                        flag = true;
+                        checkboxIconCh.click();
+                    }
+                    if (flag) break;
+                }
+            }
+            if (flag) break;
+        }
+
     }
 }

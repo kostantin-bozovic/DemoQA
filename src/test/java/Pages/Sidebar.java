@@ -41,4 +41,5 @@ public class Sidebar extends BaseTest {
         clickOnSidebarButton("Web Tables");
     } // WEB TABLE
     public void goToTextBox() { clickOnSidebarButton("Text Box");} // TEXT BOX
+    public void goToCheckBox() { clickOnSidebarButton("Check Box");} // CHECK BOX
 }
