@@ -244,8 +244,60 @@ public class ElementsTest extends BaseTest {
     }
 
 
-    //----------------------------------------------------------------
+//----------------------------------------------------------------
+    // RADIO BUTTON
 
+    @Test(priority = 120)
+    public void radioButtonElementsArePresent() {
+
+        String expectedPageName, expectedURL, expectedMessage;
+        sidebar.goToRadioButton();
+
+        // Test page name
+
+        expectedPageName = "Radio Button";
+        Assert.assertEquals(elementsPage.getPageTitleText(), expectedPageName);
+
+        // Test URL
+
+        expectedURL = "https://demoqa.com/radio-button";
+        Assert.assertEquals(driver.getCurrentUrl(), expectedURL);
+
+        // MESSAGE
+
+        expectedMessage = "Do you like the site?";
+        Assert.assertEquals(elementsPage.radioButtonMessage.getText(), expectedMessage);
+    }
+    @Test(priority = 125)
+    public void radioButtonsAreEnabled(){
+
+        sidebar.goToRadioButton();
+
+        // RADIO BUTTONS
+        Assert.assertTrue(elementsPage.yesRadioButton.isEnabled()); // YES BUTTON
+        Assert.assertFalse(elementsPage.noRadioButton.isEnabled()); // NO BUTTON
+        Assert.assertTrue(elementsPage.impressiveRadioButton.isEnabled()); // IMPRESSIVE BUTTON
+    }
+    @Test(priority = 130)
+    public void userCanSelectRadioButtons(){
+
+        sidebar.goToRadioButton(); // NEED TO FIX
+
+        // User can select "yes" radio button
+        if (!elementsPage.yesRadioButton.isSelected()) elementsPage.clickYesRadioButton();
+
+        Assert.assertTrue(elementsPage.yesRadioButton.isSelected()); // Yes is selected
+        Assert.assertFalse(elementsPage.impressiveRadioButton.isSelected()); // Impressive unselected
+
+        // User can select "Impressive" radio button
+        if (!elementsPage.impressiveRadioButton.isSelected()) elementsPage.clickImpressiveRadioButton();
+
+        Assert.assertFalse(elementsPage.yesRadioButton.isSelected()); // Yes is unselected
+        Assert.assertTrue(elementsPage.impressiveRadioButton.isSelected()); // Impressive selected
+
+        // User cannot select "no" button
+        Assert.assertFalse(elementsPage.noRadioButton.isEnabled());
+    }
 
     public void fillTextBox(){
 

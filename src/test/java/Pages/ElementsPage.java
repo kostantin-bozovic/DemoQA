@@ -73,6 +73,18 @@ public class ElementsPage extends BaseTest {
         permanentAddressTextBox.clear();
         permanentAddressTextBox.sendKeys(address);
     }
+    //------------------------------------------------------------------------------------------------------------------
+    // RADIO BUTTON
+
+    @FindBy(className = "mb-3")
+    public WebElement radioButtonMessage; // Message to chose options
+    @FindBy(id = "yesRadio")
+    public WebElement yesRadioButton; // Yes radio button
+    @FindBy(id = "impressiveRadio")
+    public WebElement impressiveRadioButton; // Impressive radio button
+    @FindBy(id = "noRadio")
+    public WebElement noRadioButton; // No radio button
+
 
     //------------------------------------------------------------------------------------------------------------------
     //  Method that perform action on web element
@@ -108,5 +120,21 @@ public class ElementsPage extends BaseTest {
     }
     public void clickOnUnchecked(int i) {
         uncheckedCheckbox.get(i).click();
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    // RADIO BUTTON
+
+    public void clickYesRadioButton(){
+        scrollToElement(yesRadioButton);
+        yesRadioButton.click();
+    }
+    public void clickNoRadioButton(){
+        scrollToElement(noRadioButton);
+        noRadioButton.click();
+    }
+    public void clickImpressiveRadioButton(){
+        scrollToElement(impressiveRadioButton);
+        impressiveRadioButton.click();
     }
 }
