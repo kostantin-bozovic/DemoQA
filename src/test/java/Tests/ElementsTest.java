@@ -3,6 +3,7 @@ package Tests;
 import Base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -244,7 +245,7 @@ public class ElementsTest extends BaseTest {
     }
 
 
-//----------------------------------------------------------------
+    //----------------------------------------------------------------
     // RADIO BUTTON
 
     @Test(priority = 120)
@@ -281,16 +282,19 @@ public class ElementsTest extends BaseTest {
     @Test(priority = 130)
     public void userCanSelectRadioButtons(){
 
-        sidebar.goToRadioButton(); // NEED TO FIX
+        sidebar.goToRadioButton(); // FIXED
 
-        // User can select "yes" radio button
-        if (!elementsPage.yesRadioButton.isSelected()) elementsPage.clickYesRadioButton();
+        scrollToElement(elementsPage.pageTitle);
+
+        Actions actions = new Actions(driver);
+
+        if (!elementsPage.yesRadioButton.isSelected()) actions.moveToElement(elementsPage.yesRadioButton).click().build().perform();
 
         Assert.assertTrue(elementsPage.yesRadioButton.isSelected()); // Yes is selected
         Assert.assertFalse(elementsPage.impressiveRadioButton.isSelected()); // Impressive unselected
 
         // User can select "Impressive" radio button
-        if (!elementsPage.impressiveRadioButton.isSelected()) elementsPage.clickImpressiveRadioButton();
+        if (!elementsPage.impressiveRadioButton.isSelected()) actions.moveToElement(elementsPage.impressiveRadioButton).click().build().perform();
 
         Assert.assertFalse(elementsPage.yesRadioButton.isSelected()); // Yes is unselected
         Assert.assertTrue(elementsPage.impressiveRadioButton.isSelected()); // Impressive selected
@@ -298,6 +302,10 @@ public class ElementsTest extends BaseTest {
         // User cannot select "no" button
         Assert.assertFalse(elementsPage.noRadioButton.isEnabled());
     }
+
+    //----------------------------------------------------------------
+
+
 
     public void fillTextBox(){
 

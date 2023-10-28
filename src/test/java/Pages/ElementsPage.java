@@ -123,18 +123,6 @@ public class ElementsPage extends BaseTest {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    // RADIO BUTTON
 
-    public void clickYesRadioButton(){
-        scrollToElement(yesRadioButton);
-        yesRadioButton.click();
-    }
-    public void clickNoRadioButton(){
-        scrollToElement(noRadioButton);
-        noRadioButton.click();
-    }
-    public void clickImpressiveRadioButton(){
-        scrollToElement(impressiveRadioButton);
-        impressiveRadioButton.click();
-    }
+
 }
