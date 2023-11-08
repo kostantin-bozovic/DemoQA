@@ -43,4 +43,5 @@ public class Sidebar extends BaseTest {
     public void goToTextBox() { clickOnSidebarButton("Text Box");} // TEXT BOX
     public void goToCheckBox() { clickOnSidebarButton("Check Box");} // CHECK BOX
     public void goToRadioButton(){clickOnSidebarButton("Radio Button");} // RADIO BUTTON
+    public void goToButtons(){clickOnSidebarButton("Buttons");} // BUTTONS
 }

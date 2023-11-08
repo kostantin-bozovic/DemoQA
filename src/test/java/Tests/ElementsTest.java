@@ -304,7 +304,37 @@ public class ElementsTest extends BaseTest {
     }
 
     //----------------------------------------------------------------
+    // Buttons
+    @Test(priority = 140)
+    public void buttonsPageElementsArePresent(){
 
+        String actualTitle, expectedURL, actualURL;
+
+        sidebar.goToButtons();
+        scrollToElement(elementsPage.pageTitle);
+
+        // URL
+        actualURL = driver.getCurrentUrl();
+        expectedURL = "https://demoqa.com/buttons";
+        Assert.assertEquals(actualURL, expectedURL);
+
+        // Page name
+        actualTitle = elementsPage.getPageTitleText();
+        Assert.assertEquals(actualTitle, "Buttons");
+
+        // Double click is visible
+        Assert.assertTrue(elementsPage.doubleClickButton.isDisplayed());
+
+        // Right click button is visible
+        Assert.assertTrue(elementsPage.rightClickButton.isDisplayed());
+
+        // Button "Click Me" is visible
+        Assert.assertTrue(elementsPage.clickMeButton.isDisplayed());
+    }
+    @Test(priority = 145)
+    public void testingEt(){
+
+    }
 
 
     public void fillTextBox(){
@@ -335,7 +365,7 @@ public class ElementsTest extends BaseTest {
     //--------------------------------------------------------------------------------------------------------------------
     // Made a method to pass through checkboxes, collect two group of checkboxes,
     // one is parent, second is child.
-    // Then this methode can contain there elements: Name, Checkbox, Children if they have
+    // This methode can contain next elements: Name, Checkbox, Children if they exist
     // User inserts name of checkbox to be checked or unchecked.
 
     public void checkboxSelector(String checkbox) {

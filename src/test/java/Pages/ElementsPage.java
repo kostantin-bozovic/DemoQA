@@ -85,6 +85,15 @@ public class ElementsPage extends BaseTest {
     @FindBy(id = "noRadio")
     public WebElement noRadioButton; // No radio button
 
+    //------------------------------------------------------------------------------------------------------------------
+    // BUTTONS
+
+    @FindBy(id = "doubleClickBtn")
+    public WebElement doubleClickButton; // Double click button
+    @FindBy(id = "rightClickBtn")
+    public WebElement rightClickButton; // Right click button
+    @FindBy(xpath = "/html/body/div[2]/div/div/div[2]/div[2]/div[2]/div[3]/button") // Button
+    public WebElement clickMeButton;
 
     //------------------------------------------------------------------------------------------------------------------
     //  Method that perform action on web element
@@ -123,6 +132,9 @@ public class ElementsPage extends BaseTest {
     }
 
     //------------------------------------------------------------------------------------------------------------------
+    // BUTTONS
 
+    // Actions performed on buttons
+    // Double click button
 
 }
