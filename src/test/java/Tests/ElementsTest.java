@@ -305,6 +305,8 @@ public class ElementsTest extends BaseTest {
 
     //----------------------------------------------------------------
     // Buttons
+
+
     @Test(priority = 140)
     public void buttonsPageElementsArePresent(){
 
@@ -332,10 +334,56 @@ public class ElementsTest extends BaseTest {
         Assert.assertTrue(elementsPage.clickMeButton.isDisplayed());
     }
     @Test(priority = 145)
-    public void testingEt(){
+    public void doubleClickButtonWorkProperly(){
 
+        String expectedMessage, actualMessage;
+
+        sidebar.goToButtons();
+        scrollToElement(elementsPage.pageTitle);
+
+        elementsPage.clickOnButton(2,true, elementsPage.doubleClickButton);
+
+        // Message is displayed
+
+        expectedMessage = "You have done a double click";
+        actualMessage = elementsPage.doubleClickMessage.getText();
+
+        Assert.assertEquals(actualMessage, expectedMessage);
     }
+    @Test(priority = 150)
+    public void rightClickButtonWorkProperly(){
 
+        String expectedMessage, actualMessage;
+
+        sidebar.goToButtons();
+        scrollToElement(elementsPage.pageTitle);
+
+        elementsPage.clickOnButton(1,false, elementsPage.rightClickButton);
+
+        // Message is displayed
+
+        expectedMessage = "You have done a right click";
+        actualMessage = elementsPage.rightClickMessage.getText();
+
+        Assert.assertEquals(actualMessage, expectedMessage);
+    }
+    @Test(priority = 155)
+    public void clickOnMeButtonWorkProperly(){
+
+        String expectedMessage, actualMessage;
+
+        sidebar.goToButtons();
+        scrollToElement(elementsPage.pageTitle);
+
+        elementsPage.clickOnButton(1,true, elementsPage.clickMeButton);
+
+        // Message is displayed
+
+        expectedMessage = "You have done a dynamic click";
+        actualMessage = elementsPage.dynamicClickMessage.getText();
+
+        Assert.assertEquals(actualMessage, expectedMessage);
+    }
 
     public void fillTextBox(){
 

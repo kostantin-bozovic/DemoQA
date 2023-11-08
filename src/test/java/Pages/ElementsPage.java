@@ -3,6 +3,7 @@ package Pages;
 import Base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -88,12 +89,19 @@ public class ElementsPage extends BaseTest {
     //------------------------------------------------------------------------------------------------------------------
     // BUTTONS
 
-    @FindBy(id = "doubleClickBtn")
-    public WebElement doubleClickButton; // Double click button
-    @FindBy(id = "rightClickBtn")
-    public WebElement rightClickButton; // Right click button
-    @FindBy(xpath = "/html/body/div[2]/div/div/div[2]/div[2]/div[2]/div[3]/button") // Button
+    @FindBy(xpath = "/html/body/div[2]/div/div/div[2]/div[2]/div[2]/div[1]/button") // Double click button
+    public WebElement doubleClickButton;
+    @FindBy(xpath = "/html/body/div[2]/div/div/div[2]/div[2]/div[2]/div[2]/button") // Right click button
+    public WebElement rightClickButton;
+    @FindBy(xpath = "/html/body/div[2]/div/div/div[2]/div[2]/div[2]/div[3]/button") // Dynamic Button
     public WebElement clickMeButton;
+    @FindBy(id = "doubleClickMessage")
+    public WebElement doubleClickMessage; // Double Click message
+    @FindBy(id = "rightClickMessage")
+    public WebElement rightClickMessage; // Right Click message
+    @FindBy(id = "dynamicClickMessage")
+    public WebElement dynamicClickMessage; // Click button
+
 
     //------------------------------------------------------------------------------------------------------------------
     //  Method that perform action on web element
@@ -135,6 +143,29 @@ public class ElementsPage extends BaseTest {
     // BUTTONS
 
     // Actions performed on buttons
-    // Double click button
+    // By entering true u will select action to perform
 
+    public void clickOnButton(int numberOfClicks, boolean leftClick, WebElement button){
+
+        Actions actions = new Actions(driver);
+
+        switch (numberOfClicks) {
+
+            case 1 -> {
+                if (leftClick) button.click();
+                else actions.contextClick(button).perform();
+            }
+
+            case 2 -> {
+                if (leftClick) actions.doubleClick(button).perform();
+                else {
+                    actions.contextClick(button).perform();
+                    actions.contextClick(button).perform();
+                }
+            }
+
+            default -> System.err.println("Wrong number of clicks");
+        }
+
+    }
 }
